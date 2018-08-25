@@ -1,8 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import AddEntry from "./components/AddEntry";
+import { Slider } from "react-native-gesture-handler";
 
 export default class App extends React.Component {
+  state = {
+    value: 0
+  };
+
   render() {
     return (
       <View>
@@ -11,12 +16,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
