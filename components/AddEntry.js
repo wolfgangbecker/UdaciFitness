@@ -3,7 +3,9 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { getMetricsMetaInfo, timeToString } from "../utils/helpers";
 import UdaciSlider from "./UdaciSlider";
 import UdaciSteppers from "./UdaciSteppers";
+import TextButton from "./TextButton";
 import DateHeader from "./DateHeader";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 function SubmitButton({ onPress }) {
   return (
@@ -14,13 +16,7 @@ function SubmitButton({ onPress }) {
 }
 
 export default class AddEntry extends Component {
-  state = {
-    run: 0,
-    bike: 0,
-    swim: 0,
-    sleep: 0,
-    eat: 0
-  };
+  state = { run: 0, bike: 0, swim: 0, sleep: 0, eat: 0 };
 
   increment = metric => {
     const { max, step } = getMetricsMetaInfo(metric);
@@ -28,10 +24,7 @@ export default class AddEntry extends Component {
     this.setState(state => {
       const count = state[metric] + step;
 
-      return {
-        ...state,
-        [metric]: count > max ? max : count
-      };
+      return { ...state, [metric]: count > max ? max : count };
     });
   };
 
@@ -39,17 +32,12 @@ export default class AddEntry extends Component {
     this.setState(state => {
       const count = state[metric] - getMetricsMetaInfo(metric).step;
 
-      return {
-        ...state,
-        [metric]: count < 0 ? 0 : count
-      };
+      return { ...state, [metric]: count < 0 ? 0 : count };
     });
   };
 
   slide = (metric, value) => {
-    this.setState(() => ({
-      [metric]: value
-    }));
+    this.setState(() => ({ [metric]: value }));
   };
 
   submit = () => {
@@ -63,10 +51,36 @@ export default class AddEntry extends Component {
       sleep: 0,
       eat: 0
     }));
+
+    // Navigate to home
+
+    // Save to 'DB'
+
+    // Clear local notification
+  };
+
+  reset = () => {
+    const key = timeToString();
+
+    // Update Redux
+
+    // Route to Home
+
+    // Update 'DB'
   };
 
   render() {
     const metaInfo = getMetricsMetaInfo();
+
+    if (this.props.alreadyLogged) {
+      return (
+        <View>
+          <Ionicons name="ios-happy-outline" size={100} />
+          <Text>You already logged your information for today</Text>
+          <TextButton onPress={this.reset}>Reset</TextButton>
+        </View>
+      );
+    }
 
     return (
       <View>
